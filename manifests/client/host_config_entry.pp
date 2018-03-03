@@ -398,211 +398,237 @@ ssh_config{
     value => $_protocol,
   ;
   'BatchMode':
-    value => bool_translate[@batchmode],
+    value => bool_translate[$batchmode],
   ;
   'ChallengeResponseAuthentication':
-    value => bool_translate[@challengeresponseauthentication],
+    value => bool_translate[$challengeresponseauthentication],
   ;
   'CheckHostIP':
-    value => bool_translate[@checkhostip],
+    value => bool_translate[$checkhostip],
   ;
-<% if @_cipher -%>
-  'Cipher':
-    value => @_cipher,
-  ;
-<% end -%>
   'Ciphers':
-    value => @_ciphers.join(','),
+    value => $_ciphers.join(','),
   ;
   'ClearAllForwardings':
-    value => bool_translate[@clearallforwardings],
+    value => bool_translate[$clearallforwardings],
   ;
   'Compression':
-    value => bool_translate[@compression],
+    value => bool_translate[$compression],
   ;
   'CompressionLevel':
-    value => @compressionlevel,
+    value => $compressionlevel,
   ;
   'ConnectionAttempts':
-    value => @connectionattempts,
+    value => $connectionattempts,
   ;
   'ConnectTimeout':
-    value => @connecttimeout,
+    value => $connecttimeout,
   ;
   'ControlMaster':
-    value => @controlmaster,
+    value => $controlmaster,
   ;
   'EnableSSHKeysign':
-    value => bool_translate[@enablesshkeysign],
+    value => bool_translate[$enablesshkeysign],
   ;
   'EscapeChar':
-    value => @escapechar,
+    value => $escapechar,
   ;
   'ExitOnForwardFailure':
-    value => bool_translate[@exitonforwardfailure],
+    value => bool_translate[$exitonforwardfailure],
   ;
   'ForwardAgent':
-    value => bool_translate[@forwardagent],
+    value => bool_translate[$forwardagent],
   ;
   'ForwardX11':
-    value => bool_translate[@forwardx11],
+    value => bool_translate[$forwardx11],
   ;
   'ForwardX11Trusted':
-    value => bool_translate[@forwardx11trusted],
+    value => bool_translate[$forwardx11trusted],
   ;
   'GatewayPorts':
-    value => bool_translate[@gatewayports],
+    value => bool_translate[$gatewayports],
   ;
   'GSSAPIAuthentication':
-    value => bool_translate[@_gssapiauthentication],
+    value => bool_translate[$_gssapiauthentication],
   ;
   'GSSAPIKeyExchange':
-    value => bool_translate[@gssapikeyexchange],
+    value => bool_translate[$gssapikeyexchange],
   ;
   'GSSAPIDelegateCredentials':
-    value => bool_translate[@gssapidelegatecredentials],
+    value => bool_translate[$gssapidelegatecredentials],
   ;
   'GSSAPIRenewalForcesRekey':
-    value => bool_translate[@gssapirenewalforcesrekey],
+    value => bool_translate[$gssapirenewalforcesrekey],
   ;
   'GSSAPITrustDns':
-    value => bool_translate[@gssapitrustdns],
+    value => bool_translate[$gssapitrustdns],
   ;
   'HashKnownHosts':
-    value => bool_translate[@hashknownhosts],
+    value => bool_translate[$hashknownhosts],
   ;
   'HostbasedAuthentication':
-    value => bool_translate[@hostbasedauthentication],
+    value => bool_translate[$hostbasedauthentication],
   ;
   'HostKeyAlgorithms':
-    value => @hostkeyalgorithms.join(','),
+    value => $hostkeyalgorithms.join(','),
   ;
   'IdentitiesOnly':
-    value => bool_translate[@identitiesonly],
+    value => bool_translate[$identitiesonly],
   ;
   'KbdInteractiveAuthentication':
-    value => bool_translate[@kbdinteractiveauthentication],
+    value => bool_translate[$kbdinteractiveauthentication],
   ;
   'LogLevel':
-    value => @ssh_loglevel,
+    value => $ssh_loglevel,
   ;
   'MACs':
-    value => @_macs.join(','),
+    value => $_macs.join(','),
   ;
   'NoHostAuthenticationForLocalhost':
-    value => bool_translate[@nohostauthenticationforlocalhost],
+    value => bool_translate[$nohostauthenticationforlocalhost],
   ;
   'NumberOfPasswordPrompts':
-    value => @numberofpasswordprompts,
+    value => $numberofpasswordprompts,
   ;
   'PasswordAuthentication':
-    value => bool_translate[@passwordauthentication],
+    value => bool_translate[$passwordauthentication],
   ;
   'PermitLocalCommand':
-    value => bool_translate[@permitlocalcommand],
+    value => bool_translate[$permitlocalcommand],
   ;
   'Port':
-    value => @port,
+    value => $port,
   ;
   'PreferredAuthentications':
-    value => @preferredauthentications.join(','),
+    value => $preferredauthentications.join(','),
   ;
   'PubkeyAuthentication':
-    value => bool_translate[@pubkeyauthentication],
+    value => bool_translate[$pubkeyauthentication],
   ;
   'RhostsRSAAuthentication':
-    value => bool_translate[@rhostsrsaauthentication],
+    value => bool_translate[$rhostsrsaauthentication],
   ;
   'RSAAuthentication':
-    value => bool_translate[@rsaauthentication],
+    value => bool_translate[$rsaauthentication],
   ;
   'SendEnv':
-    value => @sendenv.join(' '),
+    value => $sendenv.join(' '),
   ;
   'ServerAliveCountMax':
-    value => @serveralivecountmax,
+    value => $serveralivecountmax,
   ;
   'ServerAliveInterval':
-    value => @serveraliveinterval,
+    value => $serveraliveinterval,
   ;
   'StrictHostKeyChecking':
-    value => @stricthostkeychecking,
+    value => $stricthostkeychecking,
   ;
   'TCPKeepAlive':
-    value => bool_translate[@tcpkeepalive],
+    value => bool_translate[$tcpkeepalive],
   ;
   'Tunnel':
-    value => @tunnel,
+    value => $tunnel,
   ;
   'UsePrivilegedPort':
-    value => bool_translate[@useprivilegedport],
+    value => bool_translate[$useprivilegedport],
   ;
   'VerifyHostKeyDNS':
-    value => @verifyhostkeydns,
+    value => $verifyhostkeydns,
   ;
   'VisualHostKey':
-    value => bool_translate[@visualhostkey],
+    value => bool_translate[$visualhostkey],
   ;
   'XAuthLocation':
-    value => @xauthlocation,
+    value => $xauthlocation,
   ;
-<% if @bindaddress -%>
-  'BindAddress':
-    value => @bindaddress,
-  ;
-<% end -%>
-<% if @controlpath -%>
-  'ControlPath':
-    value => @controlpath,
-  ;
-<% end -%>
-<% if @dynamicforward -%>
-  'DynamicForward':
-    value => @dynamicforward,
-  ;
-<% end -%>
-<% if @globalknownhostsfile -%>
-  'GlobalKnownHostsFile':
-    value => @globalknownhostsfile.join(' '),
-  ;
-<% end -%>
-<% if @hostkeyalias -%>
-    HostKeyAlias <%= @hostkeyalias %>
-<% end -%>
-<% if @hostname -%>
-    HostName <%= @hostname %>
-<% end -%>
-<% if @identityfile -%>
-    IdentityFile <%= @identityfile %>
-<% end -%>
-<% if @kbdinteractivedevices -%>
-    KbdInteractiveDevices <%= @kbdinteractivedevices.join(',') %>
-<% end -%>
-<% if @localcommand -%>
-    LocalCommand <%= @localcommand %>
-<% end -%>
-<% if @localforward -%>
-    LocalForward <%= @localforward %>
-<% end -%>
-<% if @proxycommand -%>
-    ProxyCommand <%= @proxycommand %>
-<% end -%>
-<% if @rekeylimit -%>
-    RekeyLimit <%= @rekeylimit %>
-<% end -%>
-<% if @remoteforward -%>
-    RemoteForward <%= @remoteforward %>
-<% end -%>
-<% if @smartcarddevice -%>
-    SmartcardDevice <%= @smartcarddevice %>
-<% end -%>
-<% if @tunneldevice -%>
-    TunnelDevice <%= @tunneldevice %>
-<% end -%>
-<% if @user -%>
-    User <%= @user %>
-<% end -%>
-<% if @userknownhostsfile -%>
-    UserKnownHostsFile <%= @userknownhostsfile.join(' ') %>
-<% end -%>
 }
+###  <% if $_cipher -%>
+###    'Cipher':
+###      value => $_cipher,
+###    ;
+###  <% end -%>
+###  <% if $bindaddress -%>
+###    'BindAddress':
+###      value => $bindaddress,
+###    ;
+###  <% end -%>
+###  <% if $controlpath -%>
+###    'ControlPath':
+###      value => $controlpath,
+###    ;
+###  <% end -%>
+###  <% if $dynamicforward -%>
+###    'DynamicForward':
+###      value => $dynamicforward,
+###    ;
+###  <% end -%>
+###  <% if $globalknownhostsfile -%>
+###    'GlobalKnownHostsFile':
+###      value => $globalknownhostsfile.join(' '),
+###    ;
+###  <% end -%>
+###  <% if $hostkeyalias -%>
+###    'HostKeyAlias':
+###      value => $hostkeyalias,
+###    ;
+###  <% end -%>
+###  <% if $hostname -%>
+###    'HostName':
+###      value => $hostname,
+###    ;
+###  <% end -%>
+###  <% if $identityfile -%>
+###    'IdentityFile':
+###      value => $identityfile,
+###    ;
+###  <% end -%>
+###  <% if $kbdinteractivedevices -%>
+###    'KbdInteractiveDevices':
+###      value => $kbdinteractivedevices.join(','),
+###    ;
+###  <% end -%>
+###  <% if $localcommand -%>
+###    'LocalCommand':
+###      value => $localcommand,
+###    ;
+###  <% end -%>
+###  <% if $localforward -%>
+###    'LocalForward':
+###      value => $localforward,
+###    ;
+###  <% end -%>
+###  <% if $proxycommand -%>
+###    'ProxyCommand':
+###      value => $proxycommand,
+###    ;
+###  <% end -%>
+###  <% if $rekeylimit -%>
+###    'RekeyLimit':
+###      value => $rekeylimit,
+###    ;
+###  <% end -%>
+###  <% if $remoteforward -%>
+###    'RemoteForward':
+###      value => $remoteforward,
+###    ;
+###  <% end -%>
+###  <% if $smartcarddevice -%>
+###    'SmartcardDevice':
+###      value => $smartcarddevice,
+###    ;
+###  <% end -%>
+###  <% if $tunneldevice -%>
+###    'TunnelDevice':
+###      value => $tunneldevice,
+###    ;
+###  <% end -%>
+###  <% if $user -%>
+###    'User':
+###      value => $user,
+###    ;
+###  <% end -%>
+###  <% if $userknownhostsfile -%>
+###    'UserKnownHostsFile':
+###      value => $userknownhostsfile.join(' '),
+###    ;
+###  <% end -%>
