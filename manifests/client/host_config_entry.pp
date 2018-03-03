@@ -398,22 +398,22 @@ ssh_config{
     value => $_protocol,
   ;
   'BatchMode':
-    value => bool_translate[$batchmode],
+    value => ssh::ssh_bool_translate($batchmode),
   ;
   'ChallengeResponseAuthentication':
-    value => bool_translate[$challengeresponseauthentication],
+    value => ssh::ssh_bool_translate($challengeresponseauthentication),
   ;
   'CheckHostIP':
-    value => bool_translate[$checkhostip],
+    value => ssh::ssh_bool_translate($checkhostip),
   ;
   'Ciphers':
     value => $_ciphers.join(','),
   ;
   'ClearAllForwardings':
-    value => bool_translate[$clearallforwardings],
+    value => ssh::ssh_bool_translate($clearallforwardings),
   ;
   'Compression':
-    value => bool_translate[$compression],
+    value => ssh::ssh_bool_translate($compression),
   ;
   'CompressionLevel':
     value => $compressionlevel,
@@ -428,55 +428,55 @@ ssh_config{
     value => $controlmaster,
   ;
   'EnableSSHKeysign':
-    value => bool_translate[$enablesshkeysign],
+    value => ssh::ssh_bool_translate($enablesshkeysign),
   ;
   'EscapeChar':
     value => $escapechar,
   ;
   'ExitOnForwardFailure':
-    value => bool_translate[$exitonforwardfailure],
+    value => ssh::ssh_bool_translate($exitonforwardfailure),
   ;
   'ForwardAgent':
-    value => bool_translate[$forwardagent],
+    value => ssh::ssh_bool_translate($forwardagent),
   ;
   'ForwardX11':
-    value => bool_translate[$forwardx11],
+    value => ssh::ssh_bool_translate($forwardx11),
   ;
   'ForwardX11Trusted':
-    value => bool_translate[$forwardx11trusted],
+    value => ssh::ssh_bool_translate($forwardx11trusted),
   ;
   'GatewayPorts':
-    value => bool_translate[$gatewayports],
+    value => ssh::ssh_bool_translate($gatewayports),
   ;
   'GSSAPIAuthentication':
-    value => bool_translate[$_gssapiauthentication],
+    value => ssh::ssh_bool_translate($_gssapiauthentication),
   ;
   'GSSAPIKeyExchange':
-    value => bool_translate[$gssapikeyexchange],
+    value => ssh::ssh_bool_translate($gssapikeyexchange),
   ;
   'GSSAPIDelegateCredentials':
-    value => bool_translate[$gssapidelegatecredentials],
+    value => ssh::ssh_bool_translate($gssapidelegatecredentials),
   ;
   'GSSAPIRenewalForcesRekey':
-    value => bool_translate[$gssapirenewalforcesrekey],
+    value => ssh::ssh_bool_translate($gssapirenewalforcesrekey),
   ;
   'GSSAPITrustDns':
-    value => bool_translate[$gssapitrustdns],
+    value => ssh::ssh_bool_translate($gssapitrustdns),
   ;
   'HashKnownHosts':
-    value => bool_translate[$hashknownhosts],
+    value => ssh::ssh_bool_translate($hashknownhosts),
   ;
   'HostbasedAuthentication':
-    value => bool_translate[$hostbasedauthentication],
+    value => ssh::ssh_bool_translate($hostbasedauthentication),
   ;
   'HostKeyAlgorithms':
     value => $hostkeyalgorithms.join(','),
   ;
   'IdentitiesOnly':
-    value => bool_translate[$identitiesonly],
+    value => ssh::ssh_bool_translate($identitiesonly),
   ;
   'KbdInteractiveAuthentication':
-    value => bool_translate[$kbdinteractiveauthentication],
+    value => ssh::ssh_bool_translate($kbdinteractiveauthentication),
   ;
   'LogLevel':
     value => $ssh_loglevel,
@@ -485,16 +485,16 @@ ssh_config{
     value => $_macs.join(','),
   ;
   'NoHostAuthenticationForLocalhost':
-    value => bool_translate[$nohostauthenticationforlocalhost],
+    value => ssh::ssh_bool_translate($nohostauthenticationforlocalhost),
   ;
   'NumberOfPasswordPrompts':
     value => $numberofpasswordprompts,
   ;
   'PasswordAuthentication':
-    value => bool_translate[$passwordauthentication],
+    value => ssh::ssh_bool_translate($passwordauthentication),
   ;
   'PermitLocalCommand':
-    value => bool_translate[$permitlocalcommand],
+    value => ssh::ssh_bool_translate($permitlocalcommand),
   ;
   'Port':
     value => $port,
@@ -503,13 +503,13 @@ ssh_config{
     value => $preferredauthentications.join(','),
   ;
   'PubkeyAuthentication':
-    value => bool_translate[$pubkeyauthentication],
+    value => ssh::ssh_bool_translate($pubkeyauthentication),
   ;
   'RhostsRSAAuthentication':
-    value => bool_translate[$rhostsrsaauthentication],
+    value => ssh::ssh_bool_translate($rhostsrsaauthentication),
   ;
   'RSAAuthentication':
-    value => bool_translate[$rsaauthentication],
+    value => ssh::ssh_bool_translate($rsaauthentication),
   ;
   'SendEnv':
     value => $sendenv.join(' '),
@@ -524,19 +524,19 @@ ssh_config{
     value => $stricthostkeychecking,
   ;
   'TCPKeepAlive':
-    value => bool_translate[$tcpkeepalive],
+    value => ssh::ssh_bool_translate($tcpkeepalive),
   ;
   'Tunnel':
     value => $tunnel,
   ;
   'UsePrivilegedPort':
-    value => bool_translate[$useprivilegedport],
+    value => ssh::ssh_bool_translate($useprivilegedport),
   ;
   'VerifyHostKeyDNS':
     value => $verifyhostkeydns,
   ;
   'VisualHostKey':
-    value => bool_translate[$visualhostkey],
+    value => ssh::ssh_bool_translate($visualhostkey),
   ;
   'XAuthLocation':
     value => $xauthlocation,
