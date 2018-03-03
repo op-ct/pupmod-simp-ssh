@@ -407,7 +407,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__Ciphers":
       key   => 'Ciphers',
-      value => $_ciphers.join(","),
+      value => $_ciphers.join(','),
     ;
     "${_name}__ClearAllForwardings":
       key   => 'ClearAllForwardings',
@@ -491,7 +491,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__HostKeyAlgorithms":
       key   => 'HostKeyAlgorithms',
-      value => $hostkeyalgorithms.join(","),
+      value => $hostkeyalgorithms.join(','),
     ;
     "${_name}__IdentitiesOnly":
       key   => 'IdentitiesOnly',
@@ -507,7 +507,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__MACs":
       key   => 'MACs',
-      value => $_macs.join(","),
+      value => $_macs.join(','),
     ;
     "${_name}__NoHostAuthenticationForLocalhost":
       key   => 'NoHostAuthenticationForLocalhost',
@@ -531,7 +531,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__PreferredAuthentications":
       key   => 'PreferredAuthentications',
-      value => $preferredauthentications.join(","),
+      value => $preferredauthentications.join(','),
     ;
     "${_name}__PubkeyAuthentication":
       key   => 'PubkeyAuthentication',
@@ -547,7 +547,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__SendEnv":
       key   => 'SendEnv',
-      value => $sendenv.join(" "),
+      value => $sendenv.join(' '),
     ;
     "${_name}__ServerAliveCountMax":
       key   => 'ServerAliveCountMax',
@@ -622,7 +622,7 @@ define ssh::client::host_config_entry (
   if $globalknownhostsfile {
     ssh_config{ "${_name}__GlobalKnownHostsFile":
       key    => 'GlobalKnownHostsFile',
-      value  => $globalknownhostsfile.join(" "),
+      value  => $globalknownhostsfile.join(' '),
       host   => $name,
       target => $target,
     }
@@ -654,7 +654,7 @@ define ssh::client::host_config_entry (
   if $kbdinteractivedevices {
     ssh_config{ "${_name}__KbdInteractiveDevices":
       key    => 'KbdInteractiveDevices',
-      value  => $kbdinteractivedevices.join(","),
+      value  => $kbdinteractivedevices.join(','),
       host   => $name,
       target => $target,
     }
@@ -726,7 +726,7 @@ define ssh::client::host_config_entry (
   if $userknownhostsfile {
     ssh_config{ "${_name}__UserKnownHostsFile":
       key    => 'UserKnownHostsFile',
-      value  => $userknownhostsfile.join(" "),
+      value  => $userknownhostsfile.join(' '),
       host   => $name,
       target => $target,
     }
