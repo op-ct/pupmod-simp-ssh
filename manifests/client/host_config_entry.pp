@@ -344,6 +344,7 @@ define ssh::client::host_config_entry (
       $_macs = $::ssh::client::params::macs
     }
   }
+
   if $ciphers and !empty($ciphers) {
     $_ciphers = $ciphers
   }
@@ -407,7 +408,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__Ciphers":
       key   => 'Ciphers',
-      value => $_ciphers.join(","),
+      value => $_ciphers.join(','),
     ;
     "${_name}__ClearAllForwardings":
       key   => 'ClearAllForwardings',
@@ -491,7 +492,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__HostKeyAlgorithms":
       key   => 'HostKeyAlgorithms',
-      value => $hostkeyalgorithms.join(","),
+      value => $hostkeyalgorithms.join(','),
     ;
     "${_name}__IdentitiesOnly":
       key   => 'IdentitiesOnly',
@@ -507,7 +508,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__MACs":
       key   => 'MACs',
-      value => $_macs.join(","),
+      value => $_macs.join(','),
     ;
     "${_name}__NoHostAuthenticationForLocalhost":
       key   => 'NoHostAuthenticationForLocalhost',
@@ -531,7 +532,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__PreferredAuthentications":
       key   => 'PreferredAuthentications',
-      value => $preferredauthentications.join(","),
+      value => $preferredauthentications.join(','),
     ;
     "${_name}__PubkeyAuthentication":
       key   => 'PubkeyAuthentication',
@@ -547,7 +548,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__SendEnv":
       key   => 'SendEnv',
-      value => $sendenv.join(" "),
+      value => $sendenv.join(' '),
     ;
     "${_name}__ServerAliveCountMax":
       key   => 'ServerAliveCountMax',
@@ -595,6 +596,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $bindaddress {
     ssh_config{ "${_name}__BindAddress":
       key    => 'BindAddress',
@@ -603,6 +605,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $controlpath {
     ssh_config{ "${_name}__ControlPath":
       key    => 'ControlPath',
@@ -611,6 +614,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $dynamicforward {
     ssh_config{ "${_name}__DynamicForward":
       key    => 'DynamicForward',
@@ -619,14 +623,16 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $globalknownhostsfile {
     ssh_config{ "${_name}__GlobalKnownHostsFile":
       key    => 'GlobalKnownHostsFile',
-      value  => $globalknownhostsfile.join(" "),
+      value  => $globalknownhostsfile.join(' '),
       host   => $name,
       target => $target,
     }
   }
+
   if $hostkeyalias {
     ssh_config{ "${_name}__HostKeyAlias":
       key    => 'HostKeyAlias',
@@ -635,6 +641,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $hostname {
     ssh_config{ "${_name}__HostName":
       key    => 'HostName',
@@ -643,6 +650,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $identityfile {
     ssh_config{ "${_name}__IdentityFile":
       key    => 'IdentityFile',
@@ -651,14 +659,16 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $kbdinteractivedevices {
     ssh_config{ "${_name}__KbdInteractiveDevices":
       key    => 'KbdInteractiveDevices',
-      value  => $kbdinteractivedevices.join(","),
+      value  => $kbdinteractivedevices.join(','),
       host   => $name,
       target => $target,
     }
   }
+
   if $localcommand {
     ssh_config{ "${_name}__LocalCommand":
       key    => 'LocalCommand',
@@ -667,6 +677,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $localforward {
     ssh_config{ "${_name}__LocalForward":
       key    => 'LocalForward',
@@ -675,6 +686,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $proxycommand {
     ssh_config{ "${_name}__ProxyCommand":
       key    => 'ProxyCommand',
@@ -683,6 +695,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $rekeylimit {
     ssh_config{ "${_name}__RekeyLimit":
       key    => 'RekeyLimit',
@@ -691,6 +704,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $remoteforward {
     ssh_config{ "${_name}__RemoteForward":
       key    => 'RemoteForward',
@@ -699,6 +713,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $smartcarddevice {
     ssh_config{ "${_name}__SmartcardDevice":
       key    => 'SmartcardDevice',
@@ -707,6 +722,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $tunneldevice {
     ssh_config{ "${_name}__TunnelDevice":
       key    => 'TunnelDevice',
@@ -715,6 +731,7 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $user {
     ssh_config{ "${_name}__User":
       key    => 'User',
@@ -723,14 +740,13 @@ define ssh::client::host_config_entry (
       target => $target,
     }
   }
+
   if $userknownhostsfile {
     ssh_config{ "${_name}__UserKnownHostsFile":
       key    => 'UserKnownHostsFile',
-      value  => $userknownhostsfile.join(" "),
+      value  => $userknownhostsfile.join(' '),
       host   => $name,
       target => $target,
     }
   }
-
-
 }
