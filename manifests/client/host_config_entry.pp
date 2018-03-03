@@ -542,6 +542,7 @@ ssh_config{
     value => $xauthlocation,
   ;
 }
+
 ###  <% if $_cipher -%>
 ###    'Cipher':
 ###      value => $_cipher,
@@ -632,3 +633,5 @@ ssh_config{
 ###      value => $userknownhostsfile.join(' '),
 ###    ;
 ###  <% end -%>
+
+
