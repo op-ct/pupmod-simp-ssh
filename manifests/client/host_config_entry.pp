@@ -9,6 +9,8 @@
 #
 # @attr name The 'Host' entry name.
 #
+# @param target  Absolute path to the ssh_config file to manage.
+#
 # @param address_family  The IP Address family to use when connecting.
 #   Valid options: 'any', 'inet', 'inet6'.
 #
@@ -242,9 +244,10 @@
 # @param xauthlocation Specifies the full pathname of the xauth
 #   program.
 #
-# @author Trevor Vaughan <mailto:tvaughan@onyxpoint.com>
+# @author Trevor Vaughan <mailto:tvaughan@onyxpoint.com
 #
 define ssh::client::host_config_entry (
+  Stdlib::Absolutepath                                  $target                           = '/etc/ssh/ssh_config',
   Enum['any', 'inet', 'inet6']                          $address_family                   = 'any',
   Boolean                                               $batchmode                        = false,
   Optional[Simplib::Host]                               $bindaddress                      = undef,
@@ -380,7 +383,6 @@ define ssh::client::host_config_entry (
 
   $_name = ssh::format_host_entry_for_sorting($name)
 
-  $target = '/etc/ssh/ssh_config'
   ssh_config{
     default:
       host   => $name,
@@ -392,7 +394,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__Protocol":
       key   => 'Protocol',
-      value => $_protocol,
+      value => "${_protocol}",
     ;
     "${_name}__BatchMode":
       key   => 'BatchMode',
@@ -408,7 +410,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__Ciphers":
       key   => 'Ciphers',
-      value => $_ciphers.join(','),
+      value => $_ciphers,
     ;
     "${_name}__ClearAllForwardings":
       key   => 'ClearAllForwardings',
@@ -420,15 +422,15 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__CompressionLevel":
       key   => 'CompressionLevel',
-      value => $compressionlevel,
+      value => "${compressionlevel}",
     ;
     "${_name}__ConnectionAttempts":
       key   => 'ConnectionAttempts',
-      value => $connectionattempts,
+      value => "${connectionattempts}",
     ;
     "${_name}__ConnectTimeout":
       key   => 'ConnectTimeout',
-      value => $connecttimeout,
+      value => "${connecttimeout}",
     ;
     "${_name}__ControlMaster":
       key   => 'ControlMaster',
@@ -516,7 +518,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__NumberOfPasswordPrompts":
       key   => 'NumberOfPasswordPrompts',
-      value => $numberofpasswordprompts,
+      value => "${$numberofpasswordprompts}",
     ;
     "${_name}__PasswordAuthentication":
       key   => 'PasswordAuthentication',
@@ -528,7 +530,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__Port":
       key   => 'Port',
-      value => $port,
+      value => "${port}",
     ;
     "${_name}__PreferredAuthentications":
       key   => 'PreferredAuthentications',
@@ -548,15 +550,15 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__SendEnv":
       key   => 'SendEnv',
-      value => $sendenv.join(' '),
+      value => $sendenv,
     ;
     "${_name}__ServerAliveCountMax":
       key   => 'ServerAliveCountMax',
-      value => $serveralivecountmax,
+      value => "${serveralivecountmax}",
     ;
     "${_name}__ServerAliveInterval":
       key   => 'ServerAliveInterval',
-      value => $serveraliveinterval,
+      value => "${serveraliveinterval}",
     ;
     "${_name}__StrictHostKeyChecking":
       key   => 'StrictHostKeyChecking',
