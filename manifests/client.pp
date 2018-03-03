@@ -19,12 +19,10 @@ class ssh::client (
     ssh::client::host_config_entry { '*': }
   }
 
-  concat { '/etc/ssh/ssh_config':
+  file { '/etc/ssh/ssh_config':
     owner          => 'root',
     group          => 'root',
     mode           => '0644',
-    ensure_newline => true,
-    warn           => true,
     require        => Package['openssh-clients']
   }
 
