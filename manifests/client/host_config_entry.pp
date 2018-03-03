@@ -383,4 +383,226 @@ define ssh::client::host_config_entry (
     target  => '/etc/ssh/ssh_config',
     content => template("${module_name}/ssh_config.erb")
   }
+
+# vim regexp: '<,'>s/    \([^ ]*\) <%= \(.*\) %>/  '\1':\r    value => \2,\r  ;/
+$target = '/etc/ssh/ssh_config'
+ssh_config{
+  default:
+    host   => '*',
+    target => $target,
+  ;
+  'AddressFamily':
+    value => $address_family,
+  ;
+  'Protocol':
+    value => $_protocol,
+  ;
+  'BatchMode':
+    value => bool_translate[@batchmode],
+  ;
+  'ChallengeResponseAuthentication':
+    value => bool_translate[@challengeresponseauthentication],
+  ;
+  'CheckHostIP':
+    value => bool_translate[@checkhostip],
+  ;
+<% if @_cipher -%>
+  'Cipher':
+    value => @_cipher,
+  ;
+<% end -%>
+  'Ciphers':
+    value => @_ciphers.join(','),
+  ;
+  'ClearAllForwardings':
+    value => bool_translate[@clearallforwardings],
+  ;
+  'Compression':
+    value => bool_translate[@compression],
+  ;
+  'CompressionLevel':
+    value => @compressionlevel,
+  ;
+  'ConnectionAttempts':
+    value => @connectionattempts,
+  ;
+  'ConnectTimeout':
+    value => @connecttimeout,
+  ;
+  'ControlMaster':
+    value => @controlmaster,
+  ;
+  'EnableSSHKeysign':
+    value => bool_translate[@enablesshkeysign],
+  ;
+  'EscapeChar':
+    value => @escapechar,
+  ;
+  'ExitOnForwardFailure':
+    value => bool_translate[@exitonforwardfailure],
+  ;
+  'ForwardAgent':
+    value => bool_translate[@forwardagent],
+  ;
+  'ForwardX11':
+    value => bool_translate[@forwardx11],
+  ;
+  'ForwardX11Trusted':
+    value => bool_translate[@forwardx11trusted],
+  ;
+  'GatewayPorts':
+    value => bool_translate[@gatewayports],
+  ;
+  'GSSAPIAuthentication':
+    value => bool_translate[@_gssapiauthentication],
+  ;
+  'GSSAPIKeyExchange':
+    value => bool_translate[@gssapikeyexchange],
+  ;
+  'GSSAPIDelegateCredentials':
+    value => bool_translate[@gssapidelegatecredentials],
+  ;
+  'GSSAPIRenewalForcesRekey':
+    value => bool_translate[@gssapirenewalforcesrekey],
+  ;
+  'GSSAPITrustDns':
+    value => bool_translate[@gssapitrustdns],
+  ;
+  'HashKnownHosts':
+    value => bool_translate[@hashknownhosts],
+  ;
+  'HostbasedAuthentication':
+    value => bool_translate[@hostbasedauthentication],
+  ;
+  'HostKeyAlgorithms':
+    value => @hostkeyalgorithms.join(','),
+  ;
+  'IdentitiesOnly':
+    value => bool_translate[@identitiesonly],
+  ;
+  'KbdInteractiveAuthentication':
+    value => bool_translate[@kbdinteractiveauthentication],
+  ;
+  'LogLevel':
+    value => @ssh_loglevel,
+  ;
+  'MACs':
+    value => @_macs.join(','),
+  ;
+  'NoHostAuthenticationForLocalhost':
+    value => bool_translate[@nohostauthenticationforlocalhost],
+  ;
+  'NumberOfPasswordPrompts':
+    value => @numberofpasswordprompts,
+  ;
+  'PasswordAuthentication':
+    value => bool_translate[@passwordauthentication],
+  ;
+  'PermitLocalCommand':
+    value => bool_translate[@permitlocalcommand],
+  ;
+  'Port':
+    value => @port,
+  ;
+  'PreferredAuthentications':
+    value => @preferredauthentications.join(','),
+  ;
+  'PubkeyAuthentication':
+    value => bool_translate[@pubkeyauthentication],
+  ;
+  'RhostsRSAAuthentication':
+    value => bool_translate[@rhostsrsaauthentication],
+  ;
+  'RSAAuthentication':
+    value => bool_translate[@rsaauthentication],
+  ;
+  'SendEnv':
+    value => @sendenv.join(' '),
+  ;
+  'ServerAliveCountMax':
+    value => @serveralivecountmax,
+  ;
+  'ServerAliveInterval':
+    value => @serveraliveinterval,
+  ;
+  'StrictHostKeyChecking':
+    value => @stricthostkeychecking,
+  ;
+  'TCPKeepAlive':
+    value => bool_translate[@tcpkeepalive],
+  ;
+  'Tunnel':
+    value => @tunnel,
+  ;
+  'UsePrivilegedPort':
+    value => bool_translate[@useprivilegedport],
+  ;
+  'VerifyHostKeyDNS':
+    value => @verifyhostkeydns,
+  ;
+  'VisualHostKey':
+    value => bool_translate[@visualhostkey],
+  ;
+  'XAuthLocation':
+    value => @xauthlocation,
+  ;
+<% if @bindaddress -%>
+  'BindAddress':
+    value => @bindaddress,
+  ;
+<% end -%>
+<% if @controlpath -%>
+  'ControlPath':
+    value => @controlpath,
+  ;
+<% end -%>
+<% if @dynamicforward -%>
+  'DynamicForward':
+    value => @dynamicforward,
+  ;
+<% end -%>
+<% if @globalknownhostsfile -%>
+  'GlobalKnownHostsFile':
+    value => @globalknownhostsfile.join(' '),
+  ;
+<% end -%>
+<% if @hostkeyalias -%>
+    HostKeyAlias <%= @hostkeyalias %>
+<% end -%>
+<% if @hostname -%>
+    HostName <%= @hostname %>
+<% end -%>
+<% if @identityfile -%>
+    IdentityFile <%= @identityfile %>
+<% end -%>
+<% if @kbdinteractivedevices -%>
+    KbdInteractiveDevices <%= @kbdinteractivedevices.join(',') %>
+<% end -%>
+<% if @localcommand -%>
+    LocalCommand <%= @localcommand %>
+<% end -%>
+<% if @localforward -%>
+    LocalForward <%= @localforward %>
+<% end -%>
+<% if @proxycommand -%>
+    ProxyCommand <%= @proxycommand %>
+<% end -%>
+<% if @rekeylimit -%>
+    RekeyLimit <%= @rekeylimit %>
+<% end -%>
+<% if @remoteforward -%>
+    RemoteForward <%= @remoteforward %>
+<% end -%>
+<% if @smartcarddevice -%>
+    SmartcardDevice <%= @smartcarddevice %>
+<% end -%>
+<% if @tunneldevice -%>
+    TunnelDevice <%= @tunneldevice %>
+<% end -%>
+<% if @user -%>
+    User <%= @user %>
+<% end -%>
+<% if @userknownhostsfile -%>
+    UserKnownHostsFile <%= @userknownhostsfile.join(' ') %>
+<% end -%>
 }
