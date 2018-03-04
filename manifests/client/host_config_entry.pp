@@ -381,6 +381,8 @@ define ssh::client::host_config_entry (
     $_gssapiauthentication = false
   }
 
+  $_value = ssh::config_bool_translate($useprivilegedport)
+
   $_name = ssh::format_host_entry_for_sorting($name)
 
   ssh_config{
@@ -494,7 +496,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__HostKeyAlgorithms":
       key   => 'HostKeyAlgorithms',
-      value => $hostkeyalgorithms.join(','),
+      value => $hostkeyalgorithms,
     ;
     "${_name}__IdentitiesOnly":
       key   => 'IdentitiesOnly',
@@ -510,7 +512,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__MACs":
       key   => 'MACs',
-      value => $_macs.join(','),
+      value => $_macs,
     ;
     "${_name}__NoHostAuthenticationForLocalhost":
       key   => 'NoHostAuthenticationForLocalhost',
