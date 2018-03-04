@@ -14,16 +14,24 @@ class ssh::client (
   Boolean $haveged           = simplib::lookup('simp_options::haveged', { 'default_value' => false }),
   Boolean $fips              = simplib::lookup('simp_options::fips', { 'default_value' => false })
 ) {
+  # A hack to work around broken Augeas Lenses
+  file { '/usr/share/augeas/lenses/ssh.aug':
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0640',
+    source => "puppet:///modules/${module_name}/augeas_lenses/ssh.aug",
+    before => Class['ssh::server::conf']
+  }
 
   if $add_default_entry {
     ssh::client::host_config_entry { '*': }
   }
 
   file { '/etc/ssh/ssh_config':
-    owner          => 'root',
-    group          => 'root',
-    mode           => '0644',
-    require        => Package['openssh-clients']
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['openssh-clients']
   }
 
   file { '/etc/ssh/ssh_known_hosts':

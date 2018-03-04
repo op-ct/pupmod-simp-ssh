@@ -396,7 +396,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__Protocol":
       key   => 'Protocol',
-      value => "${_protocol}",
+      value => String($_protocol),
     ;
     "${_name}__BatchMode":
       key   => 'BatchMode',
@@ -424,15 +424,15 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__CompressionLevel":
       key   => 'CompressionLevel',
-      value => "${compressionlevel}",
+      value => String($compressionlevel),
     ;
     "${_name}__ConnectionAttempts":
       key   => 'ConnectionAttempts',
-      value => "${connectionattempts}",
+      value => String($connectionattempts),
     ;
     "${_name}__ConnectTimeout":
       key   => 'ConnectTimeout',
-      value => "${connecttimeout}",
+      value => String($connecttimeout),
     ;
     "${_name}__ControlMaster":
       key   => 'ControlMaster',
@@ -520,7 +520,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__NumberOfPasswordPrompts":
       key   => 'NumberOfPasswordPrompts',
-      value => "${$numberofpasswordprompts}",
+      value => String($numberofpasswordprompts),
     ;
     "${_name}__PasswordAuthentication":
       key   => 'PasswordAuthentication',
@@ -532,7 +532,7 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__Port":
       key   => 'Port',
-      value => "${port}",
+      value => String($port),
     ;
     "${_name}__PreferredAuthentications":
       key   => 'PreferredAuthentications',
@@ -556,11 +556,11 @@ define ssh::client::host_config_entry (
     ;
     "${_name}__ServerAliveCountMax":
       key   => 'ServerAliveCountMax',
-      value => "${serveralivecountmax}",
+      value => String($serveralivecountmax),
     ;
     "${_name}__ServerAliveInterval":
       key   => 'ServerAliveInterval',
-      value => "${serveraliveinterval}",
+      value => String($serveraliveinterval),
     ;
     "${_name}__StrictHostKeyChecking":
       key   => 'StrictHostKeyChecking',
