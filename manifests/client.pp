@@ -20,10 +20,10 @@ class ssh::client (
   }
 
   file { '/etc/ssh/ssh_config':
-    owner          => 'root',
-    group          => 'root',
-    mode           => '0644',
-    require        => Package['openssh-clients']
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['openssh-clients']
   }
 
   file { '/etc/ssh/ssh_known_hosts':
