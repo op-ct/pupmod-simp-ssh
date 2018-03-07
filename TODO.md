@@ -1,0 +1,14 @@
+- [x] SIMP-4511   https://simp-project.atlassian.net/browse/SIMP-4511
+  - [x] switch templates to `ssh_config`
+  - [x] fix ssh lens
+  - [ ] we took concat ssh_config out of `spec/classes/client_spec.rb`, so:
+    - [ ] add spec tests for ssh_config file?
+- [x] Fix @author in header comments
+  - [x] Add contributors file?
+- [ ] SIMP-4440
+  - https://simp-project.atlassian.net/browse/SIMP-4440
+  - [ ] Test to config for extra sshd_config and ssh_config options SIMP-4440
+- [ ] SIMP-4515 Remove SIMP-1143 workaround from acceptance tests
+  - FIXME: confirmed SIMP-1143 still an issue!
+  - [ ] idempotency
+- [.] Update CHANGELOG
