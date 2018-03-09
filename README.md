@@ -6,7 +6,6 @@
 #### Table of Contents
 
 <!-- vim-markdown-toc GFM -->
-
 * [Module Description](#module-description)
   * [Ciphers](#ciphers)
 * [Setup](#setup)
@@ -14,8 +13,8 @@
   * [Setup requirements](#setup-requirements)
   * [Beginning with SSH](#beginning-with-ssh)
 * [Usage](#usage)
-    * [Managing the Server](#managing-the-server)
-    * [Client](#client)
+    * [Managing the SSHD Server by itself](#managing-the-sshd-server-by-itself)
+    * [Managing the SSH client by itself](#managing-the-ssh-client-by-itself)
   * [Disabling fallback ciphers](#disabling-fallback-ciphers)
 * [Reference](#reference)
   * [Public Classes](#public-classes)
@@ -75,27 +74,32 @@ include 'ssh'
 
 including `ssh` will install both the server and the client
 
-#### Managing the Server
+#### Managing the SSHD Server by itself
 
 ```puppet
-include 'sshd::server'
+class{ 'ssh':
+  enable_client => false,
+  enable_server => true,
+}
 ```
 
-This will result in a server that accepts the following ciphers:
-- aes128-gcm@openssh.com
-- aes256-gcm@openssh.com
-- aes128-cbc
-- aes192-cbc
-- aes256-cbc
+#### Managing the SSH client by itself
 
-#### Client
 ```puppet
-include 'sshd::client'
+class{ 'ssh':
+  enable_client => false,
+  enable_server => true,
+}
+
 ```
-The ciphers configured for the ssh client are set to only the strongest ciphers.
-In order to connect to a system that does not have these ciphers but uses the
-older ciphers you should use the command line option, `ssh -c`.  See the man
-pages for further information.
+By default, the system ssh client ciphers are configured to strong ciphers that
+are recommended for use.
+
+* If you need to connect to a system that does not have these ciphers but uses the
+  older ciphers, you should use the command line option, `ssh -c`.
+* You can see a list of ciphers that your ssh client supports with `ssh -Q
+  cipher`.
+* See the man pages for further information.
 
 
 ### Disabling fallback ciphers
