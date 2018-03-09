@@ -1,4 +1,4 @@
-* Mon Mar 5 2018 Chris Tessmer <chris.tessmer@onyxpoint.com> - 6.4.0-0
+* Mon Mar 05 2018 Chris Tessmer <chris.tessmer@onyxpoint.com> - 6.4.0-0
 - Re-implemented `ssh::client::host_config_entry` using `ssh_config`:
   - Users can now customize additional SSH client options
   - Customizing ssh_config is consistent with sshd_config
@@ -12,6 +12,7 @@
   - Added ciphers report to acceptance test to verify configs under different
     conditions
 - Removed grub from metadata.json and .fixtures.yml because nothing uses it
+- Removed NSCD-related cruft (/etc/pam_ldap.conf)
 
 * Mon Feb 12 2018 Liz Nemsick <lnemsick.simp@gmail.com> - 6.3.0-0
 - Update upperbound on puppetlabs/concat version to < 5.0.0
