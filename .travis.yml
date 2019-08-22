@@ -8,7 +8,22 @@
 # SIMP 6.3      5.5      2.4    TBD
 # PE 2018.1     5.5      2.4    2020-05 (LTS)
 # PE 2019.0     6.0      2.5    2019-08-31
-
+#
+# ------------------------------------------------------------------------------
+#
+# RelEng notes:
+#
+# To publish a release to GitHub and PuppetForge,
+#
+# This requires the following Travis Secure Env variables to be set in the
+# repo's settings page:
+#
+#   GITHUB_OAUTH_TOKEN <-- must be Travis Secure Env var
+#   PUPPET_FORGE_PW    <-- must be Travis Secure Env var
+#   PUPPET_FORGE_USER  <-- can (and probably should) be public
+#
+# The secure env vars wiil be filtered in Travis CI log output, and are not
+# provided untrusted builds (i.e, triggered by PR from another repository)
 ---
 
 language: ruby
@@ -34,15 +49,6 @@ global:
   - STRICT_VARIABLES=yes
 
 stages:
-  # To publish releases, the following Travis Secure Env variables:
-  #
-  #   GITHUB_OAUTH_TOKEN
-  #   PUPPET_FORGE_USER
-  #   PUPPET_FORGE_PW
-  #
-  # These variables should *only* be available from a protected branch that is
-  # used to tag releases for release (e.g., master or simp-master)
-  #
   #
   # To validate if $GITHUB_OAUTH_TOKEN is able to publish a GitHub release,
   # trigger a custom TravisCI build for this branch using the CUSTOM CONFIG:
@@ -131,7 +137,7 @@ jobs:
         - 'COOKIE_FILE="$(mktemp)"'
         - 'HEADERS_FILE="$(mktemp)"'
       script:
-      - 'printf "\n===== PUPPET_FORGE_PW validation " \
+      - 'printf "\n===== PUPPET_FORGE_PW validation for user ${PUPPET_FORGE_USER}" \
                 "\n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS;
          user_agent=''puppetforgeRelengTravisCI/0.1.1-testing Purpose/forge-credential-test-for-ci-pipeline'';
          authenticity_token="$(curl -c "$COOKIE_FILE" -L https://forge.puppet.com/login | grep ''input name="authenticity_token"'' | sed -e ''s/^.*value="//'' | cut -d\" -f1)" ;
