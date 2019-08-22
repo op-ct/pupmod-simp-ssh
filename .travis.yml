@@ -145,7 +145,7 @@ jobs:
       script:
       - 'printf "\n===== PUPPET_FORGE_PW validation for user ${PUPPET_FORGE_USER}
                 \n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS'
-     -  'authenticity_token="$(curl -c "$COOKIE_FILE" -L https://forge.puppet.com/login | grep ''input name="authenticity_token"'' | sed -e ''s/^.*value="//'' | cut -d\" -f1)" ;
+      - 'authenticity_token="$(curl -c "$COOKIE_FILE" -L https://forge.puppet.com/login | grep ''input name="authenticity_token"'' | sed -e ''s/^.*value="//'' | cut -d\" -f1)" ;
          echo curl -b "$COOKIE_FILE" -D "$HEADERS_FILE" -d "user_name=${PUPPET_FORGE_USER}&password=${PUPPET_FORGE_PW}&utf-8=%E2%9C%93&return_to_path=%2F&authenticity_token=${authenticity_token}" -L https://forge.puppet.com/login 2>&1 >/dev/null;
          grep ''^HTTP/1.1 200 OK'' "$HEADERS_FILE"'
       after_script:
