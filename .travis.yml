@@ -133,7 +133,7 @@ jobs:
       script:
       - 'printf "\n===== PUPPET_FORGE_PW validation " \
                 "\n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS;
-         user_agent=''SimpRelengTravisCI/0.1.0-testing Purpose/forge-credential-test-for-ci-pipeline'';
+         user_agent=''puppetforgeRelengTravisCI/0.1.1-testing Purpose/forge-credential-test-for-ci-pipeline'';
          authenticity_token="$(curl -c "$COOKIE_FILE" -L https://forge.puppet.com/login | grep ''input name="authenticity_token"'' | sed -e ''s/^.*value="//'' | cut -d\" -f1)" ;
          echo curl -b "$COOKIE_FILE" -D "$HEADERS_FILE" -d
            "user_name=${PUPPET_FORGE_USER}&password=${PUPPET_FORGE_PW}" \
