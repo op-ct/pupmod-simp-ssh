@@ -6,14 +6,19 @@
 # ------------------------------------------------------------------------------
 # Release       Puppet   Ruby   EOL
 # SIMP 6.3      5.5      2.4    TBD
+# SIMP 6.4      5.5      2.4    TBD
 # PE 2018.1     5.5      2.4    2020-05 (LTS)
 # PE 2019.0     6.0      2.5    2019-08-31
 #
 # ------------------------------------------------------------------------------
 #
-# RelEng notes:
+# Release Engineering notes:
 #
-# To publish a release to GitHub and PuppetForge,
+# To automagically publish a release to GitHub and PuppetForge:
+#
+#   - Push a git tag that matches the version in the module's `metadata.json`
+#   - The tag SHOULD be annotated with release notes, but nothing enforces this
+#     convention at present
 #
 # This requires the following Travis Secure Env variables to be set in the
 # repo's settings page:
@@ -123,7 +128,7 @@ jobs:
             condition: '($SKIP_FORGE_PUBLISH != true)'
 
     - stage: 'validate travis'
-      name: validate GitHub OAuth token in TravisCI has sufficient scope to release
+      name: 'validate CI GitHub OAuth token has sufficient scope to release'
       script:
       - 'printf "\n===== GITHUB_OAUTH_TOKEN validation
                  \n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS;
@@ -132,20 +137,16 @@ jobs:
         -I | grep ^X-OAuth-Scopes | egrep -w "repo|public_repo" '
 
     - stage: 'validate travis'
-      name: 'validate that TravisCI Puppet Forge credentials can authenticate'
+      name: 'validate CI Puppet Forge credentials can authenticate'
       before_script:
         - 'COOKIE_FILE="$(mktemp)"'
         - 'HEADERS_FILE="$(mktemp)"'
+        - 'user_agent="puppetforgeRelengTravisCI/0.1.1-testing Purpose/forge-credential-test-for-ci-pipeline"'
       script:
-      - 'printf "\n===== PUPPET_FORGE_PW validation for user ${PUPPET_FORGE_USER}" \
-                "\n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS;
-         user_agent=''puppetforgeRelengTravisCI/0.1.1-testing Purpose/forge-credential-test-for-ci-pipeline'';
-         authenticity_token="$(curl -c "$COOKIE_FILE" -L https://forge.puppet.com/login | grep ''input name="authenticity_token"'' | sed -e ''s/^.*value="//'' | cut -d\" -f1)" ;
-         echo curl -b "$COOKIE_FILE" -D "$HEADERS_FILE" -d
-           "user_name=${PUPPET_FORGE_USER}&password=${PUPPET_FORGE_PW}" \
-           "&utf-8=%E2%9C%93&return_to_path=%2F" \
-           "&authenticity_token=${authenticity_token}"
-           -L https://forge.puppet.com/login 2>&1 >/dev/null;
+      - 'printf "\n===== PUPPET_FORGE_PW validation for user ${PUPPET_FORGE_USER}
+                \n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS'
+     -  'authenticity_token="$(curl -c "$COOKIE_FILE" -L https://forge.puppet.com/login | grep ''input name="authenticity_token"'' | sed -e ''s/^.*value="//'' | cut -d\" -f1)" ;
+         echo curl -b "$COOKIE_FILE" -D "$HEADERS_FILE" -d "user_name=${PUPPET_FORGE_USER}&password=${PUPPET_FORGE_PW}&utf-8=%E2%9C%93&return_to_path=%2F&authenticity_token=${authenticity_token}" -L https://forge.puppet.com/login 2>&1 >/dev/null;
          grep ''^HTTP/1.1 200 OK'' "$HEADERS_FILE"'
       after_script:
         - 'rm -f "$COOKIE_FILE" "$HEADERS_FILE"'
