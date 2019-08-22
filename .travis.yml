@@ -34,7 +34,17 @@ global:
   - STRICT_VARIABLES=yes
 
 stages:
-  # To check if $GITHUB_OAUTH_TOKEN is able to publish a GitHub release,
+  # To publish releases, the following Travis Secure Env variables:
+  #
+  #   GITHUB_OAUTH_TOKEN
+  #   PUPPET_FORGE_USER
+  #   PUPPET_FORGE_PW
+  #
+  # These variables should *only* be available from a protected branch that is
+  # used to tag releases for release (e.g., master or simp-master)
+  #
+  #
+  # To validate if $GITHUB_OAUTH_TOKEN is able to publish a GitHub release,
   # trigger a custom TravisCI build for this branch using the CUSTOM CONFIG:
   #
   #   env: VALIDATE_TRAVIS=yes
@@ -98,10 +108,10 @@ jobs:
           skip_cleanup: true
           on:
             tags: true
-            condition: '($SKIP_FORGE_PUBLISH != true)'
+            condition: '($SKIP_GITHUB_PUBLISH != true)'
         - provider: puppetforge
-          user: simp
-          password: $FORGE_PW
+          user: $PUPPET_FORGE_USER
+          password: $PUPPET_FORGE_PW
           on:
             tags: true
             condition: '($SKIP_FORGE_PUBLISH != true)'
@@ -125,8 +135,10 @@ jobs:
                 "\n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS;
          user_agent=''SimpRelengTravisCI/0.1.0-testing Purpose/forge-credential-test-for-ci-pipeline'';
          authenticity_token="$(curl -c "$COOKIE_FILE" -L https://forge.puppet.com/login | grep ''input name="authenticity_token"'' | sed -e ''s/^.*value="//'' | cut -d\" -f1)" ;
-         curl -b "$COOKIE_FILE" -D "$HEADERS_FILE" -d
-           "user_name=simp&password=${FORGE_PW}&utf-8=%E2%9C%93&return_to_path=%2F&authenticity_token=${authenticity_token}"
+         echo curl -b "$COOKIE_FILE" -D "$HEADERS_FILE" -d
+           "user_name=${PUPPET_FORGE_USER}&password=${PUPPET_FORGE_PW}" \
+           "&utf-8=%E2%9C%93&return_to_path=%2F" \
+           "&authenticity_token=${authenticity_token}"
            -L https://forge.puppet.com/login 2>&1 >/dev/null;
          grep ''^HTTP/1.1 200 OK'' "$HEADERS_FILE"'
       after_script:
