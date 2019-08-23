@@ -136,6 +136,7 @@ jobs:
 
     - stage: 'validate tokens'
       name: 'validate CI GitHub OAuth token has sufficient scope to release'
+      install: skip
       script:
       - 'printf "\n===== GITHUB_OAUTH_TOKEN validation
                  \n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS;
@@ -145,9 +146,12 @@ jobs:
 
     - stage: 'validate tokens'
       name: 'validate CI Puppet Forge token authenticates with API'
+      install: skip
       before_script:
       script:
       - 'printf "\n===== PUPPET_FORGE_PW validation for user ${PUPPET_FORGE_USER}
                 \n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS'
       - 'echo "=== user agent: ''${USER_AGENT}''"'
-      - 'curl -sS --fail -A "$USER_AGENT" -H "Authorization: Bearer ${PUPPETFORGE_API_TOKEN}"  https://forgeapi.puppet.com/v3/users'
+      - 'curl -sS --fail -A "$USER_AGENT"
+         -H "Authorization: Bearer ${PUPPETFORGE_API_TOKEN}"
+         https://forgeapi.puppet.com/v3/users > /dev/null'
