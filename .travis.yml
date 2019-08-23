@@ -112,7 +112,7 @@ jobs:
       rvm: 2.4.5
       script:
         - true
-      env: 'user_agent="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
+      env: 'USER_AGENT="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
       before_deploy:
         - "export PUPMOD_METADATA_VERSION=`ruby -r json -e \"puts JSON.parse(File.read('metadata.json')).fetch('version')\"`"
         - '[[ $TRAVIS_TAG =~ ^simp-${PUPMOD_METADATA_VERSION}$|^${PUPMOD_METADATA_VERSION}$ ]]'
@@ -125,7 +125,7 @@ jobs:
             condition: '($SKIP_GITHUB_PUBLISH != true)'
         - provider: script
           script:
-            - 'curl -sS --fail -A "$user_agent"
+            - 'curl -sS --fail -A "$USER_AGENT"
                -H "Authorization: Bearer ${PUPPETFORGE_API_TOKEN}"
                -X POST
                -F "file=@pkg/poxvupuli-inert-0.3.0.tar.gz"
@@ -149,5 +149,5 @@ jobs:
       script:
       - 'printf "\n===== PUPPET_FORGE_PW validation for user ${PUPPET_FORGE_USER}
                 \n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS'
-      - 'echo "=== user agent: ''${user_agent}''"'
-      - 'curl -sS --fail -A "$user_agent" -H "Authorization: Bearer ${PUPPETFORGE_API_TOKEN}"  https://forgeapi.puppet.com/v3/users'
+      - 'echo "=== user agent: ''${USER_AGENT}''"'
+      - 'curl -sS --fail -A "$USER_AGENT" -H "Authorization: Bearer ${PUPPETFORGE_API_TOKEN}"  https://forgeapi.puppet.com/v3/users'
