@@ -112,10 +112,10 @@ jobs:
       rvm: 2.4.5
       script:
         - true
+      env: 'user_agent="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
       before_deploy:
         - "export PUPMOD_METADATA_VERSION=`ruby -r json -e \"puts JSON.parse(File.read('metadata.json')).fetch('version')\"`"
         - '[[ $TRAVIS_TAG =~ ^simp-${PUPMOD_METADATA_VERSION}$|^${PUPMOD_METADATA_VERSION}$ ]]'
-        - 'export user_agent="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
       deploy:
         - provider: releases
           api_key: $GITHUB_OAUTH_TOKEN
@@ -124,11 +124,12 @@ jobs:
             tags: true
             condition: '($SKIP_GITHUB_PUBLISH != true)'
         - provider: script
-          script: 'curl -sS --fail -A "$user_agent"
-                   -H "Authorization: Bearer ${PUPPETFORGE_API_TOKEN}"
-                   -X POST
-                   -F "file=@pkg/poxvupuli-inert-0.3.0.tar.gz"
-                   https://forgeapi.puppet.com/v3/releases'
+          script:
+            - 'curl -sS --fail -A "$user_agent"
+               -H "Authorization: Bearer ${PUPPETFORGE_API_TOKEN}"
+               -X POST
+               -F "file=@pkg/poxvupuli-inert-0.3.0.tar.gz"
+               https://forgeapi.puppet.com/v3/releases'
           on:
             tags: true
             condition: '($SKIP_FORGE_PUBLISH != true)'
