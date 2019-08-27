@@ -11,18 +11,6 @@
 # PE 2019.0     6.0      2.5    2019-08-31
 # ==============================================================================
 #
-# Release Engineering notes:
-#
-#   To automagically publish a release to GitHub and PuppetForge:
-#
-#   - Set GITHUB_OAUTH_TOKEN and PUPPETFORGE_API_TOKEN as secure env variables
-#     in this repo's Travis CI settings
-#   - Push a git tag that matches the version in the module's `metadata.json`
-#   - The tag SHOULD be annotated with release notes, but nothing enforces this
-#     convention at present
-#
-# ------------------------------------------------------------------------------
-#
 # Travis CI Repo options for this pipeline:
 #
 #   Travis CI Env Var      Type      Notes
@@ -45,6 +33,18 @@
 #     env: VALIDATE_TOKENS=yes
 #
 # ------------------------------------------------------------------------------
+#
+# Release Engineering notes:
+#
+#   To automagically publish a release to GitHub and PuppetForge:
+#
+#   - Set GITHUB_OAUTH_TOKEN and PUPPETFORGE_API_TOKEN as secure env variables
+#     in this repo's Travis CI settings
+#   - Push a git tag that matches the version in the module's `metadata.json`
+#   - The tag SHOULD be annotated with release notes, but nothing enforces this
+#     convention at present
+#
+# ------------------------------------------------------------------------------
 ---
 
 language: ruby
@@ -56,10 +56,10 @@ bundler_args: --without development system_tests --path .vendor
 notifications:
   email: false
 
-addons:
-  apt:
-    packages:
-      - rpm
+###addons:
+###  apt:
+###    packages:
+###      - rpm
 
 before_install:
   - for x in ${HOME}/.rvm/gems/*; do gem uninstall -I -x -i "${x}" -v '>= 1.17' bundler || true; gem uninstall -I -x -i "${x}@global" -v '>= 1.17' bundler || true; done
@@ -68,7 +68,6 @@ before_install:
 
 env:
   global:
-    - STRICT_VARIABLES=yes
     - 'FORGE_USER_AGENT="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
 
 stages:
@@ -144,6 +143,7 @@ jobs:
             condition: '($SKIP_FORGE_PUBLISH != true)'
 
     - stage: 'validate tokens'
+      language: minimal
       name:  'validate CI GitHub OAuth token has sufficient scope to release'
       before_install: skip
       install: skip
@@ -156,6 +156,7 @@ jobs:
 
     - stage: 'validate tokens'
       name:  'validate CI Puppet Forge token authenticates with API'
+      language: minimal
       before_install: skip
       install: skip
       script:
