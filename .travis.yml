@@ -135,19 +135,19 @@ jobs:
             condition: '($SKIP_FORGE_PUBLISH != true)'
 
     - stage: 'validate tokens'
-      name: 'validate CI GitHub OAuth token has sufficient scope to release'
+      name:  'validate CI GitHub OAuth token has sufficient scope to release'
       install: skip
       script:
       - 'printf "\n===== GITHUB_OAUTH_TOKEN validation
-                 \n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS;
-        OWNER="$(echo $TRAVIS_REPO_SLUG | cut -d/ -f1)";
-        curl -H "Authorization: token ${GITHUB_OAUTH_TOKEN}" "https://api.github.com/users/$OWNER"
-        -I | grep ^X-OAuth-Scopes | egrep -w "repo|public_repo" '
+                 \n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS'
+      - 'OWNER="$(echo $TRAVIS_REPO_SLUG | cut -d/ -f1)"
+          curl -H "Authorization: token ${GITHUB_OAUTH_TOKEN}"
+          "https://api.github.com/users/$OWNER"
+          -I | grep ^X-OAuth-Scopes | egrep -w "repo|public_repo"'
 
     - stage: 'validate tokens'
-      name: 'validate CI Puppet Forge token authenticates with API'
+      name:  'validate CI Puppet Forge token authenticates with API'
       install: skip
-      before_script:
       script:
       - 'printf "\n===== PUPPET_FORGE_PW validation for user ${PUPPET_FORGE_USER}
                 \n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS'
