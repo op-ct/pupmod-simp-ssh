@@ -144,6 +144,7 @@ jobs:
 
     - stage: 'validate tokens'
       name:  'validate CI GitHub OAuth token has sufficient scope to release'
+      before_install: skip
       install: skip
       script:
       - 'echo; echo "===== GITHUB_OAUTH_TOKEN validation (TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS)"; echo'
@@ -154,6 +155,7 @@ jobs:
 
     - stage: 'validate tokens'
       name:  'validate CI Puppet Forge token authenticates with API'
+      before_install: skip
       install: skip
       script:
       - 'echo; echo "===== PUPPETFORGE_API_TOKEN validation (TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS)"; echo'
