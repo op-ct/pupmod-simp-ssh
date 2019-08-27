@@ -9,34 +9,42 @@
 # SIMP 6.4      5.5      2.4    TBD
 # PE 2018.1     5.5      2.4    2020-05 (LTS)
 # PE 2019.0     6.0      2.5    2019-08-31
-#
 # ==============================================================================
 #
 # Release Engineering notes:
 #
-# To automagically publish a release to GitHub and PuppetForge:
+#   To automagically publish a release to GitHub and PuppetForge:
 #
+#   - Set GITHUB_OAUTH_TOKEN and PUPPETFORGE_API_TOKEN as secure env variables
+#     in this repo's Travis CI settings
 #   - Push a git tag that matches the version in the module's `metadata.json`
 #   - The tag SHOULD be annotated with release notes, but nothing enforces this
 #     convention at present
 #
-# Pipeline-driven releases require the following Travis Secure Env variables to
-# be set in the repo's Travis CI settings page:
+# ------------------------------------------------------------------------------
 #
-#   GITHUB_OAUTH_TOKEN <-- must be Travis Secure Env var
-#   PUPPET_FORGE_PW    <-- must be Travis Secure Env var
-#   PUPPET_FORGE_USER  <-- can (and probably should) be public
+# Travis CI Repo options for this pipeline:
 #
-# The secure env vars wiil be filtered in Travis CI log output, and are not
-# provided untrusted builds (i.e, triggered by PR from another repository)
+#   Travis CI Env Var      Type      Notes
+#   ---------------------  --------  -------------------------------------------
+#   GITHUB_OAUTH_TOKEN     Secure    Required for automated GitHub releases
+#   PUPPETFORGE_API_TOKEN  Secure    Required for automated Forge releases
+#   SKIP_GITHUB_PUBLISH    Optional  Skips publishing GitHub releases if "true"
+#   SKIP_FORGE_PUBLISH     Optional  Skips publishing to Puppet Forge if "true"
+#
+#   The secure env vars wiil be filtered in Travis CI log output, and are not
+#   provided untrusted builds (i.e, triggered by PR from another repository)
 #
 # ------------------------------------------------------------------------------
 #
-# To validate if $GITHUB_OAUTH_TOKEN is able to publish a GitHub release,
-# trigger a custom TravisCI build for this branch using the CUSTOM CONFIG:
+# Travis CI Trigger options for this pipeline:
 #
-#   env: VALIDATE_TOKENS=yes
+#   To validate if $GITHUB_OAUTH_TOKEN is able to publish a GitHub release,
+#   trigger a custom Travis CI build for this branch using the CUSTOM CONFIG:
 #
+#     env: VALIDATE_TOKENS=yes
+#
+# ------------------------------------------------------------------------------
 ---
 
 language: ruby
@@ -138,10 +146,9 @@ jobs:
       name:  'validate CI GitHub OAuth token has sufficient scope to release'
       install: skip
       script:
-      - 'printf "\n===== GITHUB_OAUTH_TOKEN validation
-                 \n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS'
-      - 'OWNER="$(echo $TRAVIS_REPO_SLUG | cut -d/ -f1)"
-          curl -H "Authorization: token ${GITHUB_OAUTH_TOKEN}"
+      - 'echo; echo "===== GITHUB_OAUTH_TOKEN validation (TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS)"; echo'
+      - 'OWNER="$(echo $TRAVIS_REPO_SLUG | cut -d/ -f1)"'
+      - 'curl -H "Authorization: token ${GITHUB_OAUTH_TOKEN}"
           "https://api.github.com/users/$OWNER"
           -I | grep ^X-OAuth-Scopes | egrep -w "repo|public_repo"'
 
@@ -149,8 +156,7 @@ jobs:
       name:  'validate CI Puppet Forge token authenticates with API'
       install: skip
       script:
-      - 'printf "\n===== PUPPET_FORGE_PW validation for user ${PUPPET_FORGE_USER}
-                \n(TRAVIS_SECURE_ENV_VARS=%b)\n\n" $TRAVIS_SECURE_ENV_VARS'
+      - 'echo; echo "===== PUPPETFORGE_API_TOKEN validation (TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS)"; echo'
       - 'echo "=== user agent: ''${USER_AGENT}''"'
       - 'curl -sS --fail -A "$USER_AGENT"
          -H "Authorization: Bearer ${PUPPETFORGE_API_TOKEN}"
