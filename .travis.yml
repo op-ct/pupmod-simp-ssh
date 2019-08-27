@@ -145,6 +145,7 @@ jobs:
     - stage: 'validate tokens'
       name:  'validate CI GitHub OAuth token has sufficient scope to release'
       install: skip
+      env: 'USER_AGENT="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
       script:
       - 'echo; echo "===== GITHUB_OAUTH_TOKEN validation (TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS)"; echo'
       - 'OWNER="$(echo $TRAVIS_REPO_SLUG | cut -d/ -f1)"'
@@ -155,6 +156,7 @@ jobs:
     - stage: 'validate tokens'
       name:  'validate CI Puppet Forge token authenticates with API'
       install: skip
+      env: 'USER_AGENT="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
       script:
       - 'echo; echo "===== PUPPETFORGE_API_TOKEN validation (TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS)"; echo'
       - 'echo "=== user agent: ''${USER_AGENT}''"'
