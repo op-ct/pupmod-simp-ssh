@@ -66,8 +66,10 @@ before_install:
   - gem install -v '~> 1.17' bundler
   - rm -f Gemfile.lock
 
-global:
-  - STRICT_VARIABLES=yes
+env:
+  global:
+    - STRICT_VARIABLES=yes
+    - 'FORGE_USER_AGENT="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
 
 stages:
   - name: 'validate tokens'
@@ -162,5 +164,3 @@ jobs:
       - 'curl -sS --fail -A "$FORGE_USER_AGENT"
          -H "Authorization: Bearer ${PUPPETFORGE_API_TOKEN}"
          https://forgeapi.puppet.com/v3/users > /dev/null'
-    - env:
-      - 'FORGE_USER_AGENT="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
