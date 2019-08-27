@@ -120,10 +120,11 @@ jobs:
       rvm: 2.4.5
       script:
         - true
-      env: 'USER_AGENT="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
       before_deploy:
         - "export PUPMOD_METADATA_VERSION=`ruby -r json -e \"puts JSON.parse(File.read('metadata.json')).fetch('version')\"`"
         - '[[ $TRAVIS_TAG =~ ^simp-${PUPMOD_METADATA_VERSION}$|^${PUPMOD_METADATA_VERSION}$ ]]'
+      env:
+        - 'USER_AGENT="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
       deploy:
         - provider: releases
           api_key: $GITHUB_OAUTH_TOKEN
@@ -145,7 +146,6 @@ jobs:
     - stage: 'validate tokens'
       name:  'validate CI GitHub OAuth token has sufficient scope to release'
       install: skip
-      env: 'USER_AGENT="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
       script:
       - 'echo; echo "===== GITHUB_OAUTH_TOKEN validation (TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS)"; echo'
       - 'OWNER="$(echo $TRAVIS_REPO_SLUG | cut -d/ -f1)"'
@@ -156,7 +156,6 @@ jobs:
     - stage: 'validate tokens'
       name:  'validate CI Puppet Forge token authenticates with API'
       install: skip
-      env: 'USER_AGENT="TravisCI-ForgeReleng-Script/0.3.0 (Purpose/forge-ops-for-${TRAVIS_REPO_SLUG})"'
       script:
       - 'echo; echo "===== PUPPETFORGE_API_TOKEN validation (TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS)"; echo'
       - 'echo "=== user agent: ''${USER_AGENT}''"'
