@@ -73,7 +73,6 @@ env:
 stages:
   - name: 'validate tokens'
     if: 'env(VALIDATE_TOKENS) = yes'
-    language: minimal
   - name: check
     if: 'NOT env(VALIDATE_TOKENS) = yes'
   - name: spec
@@ -144,6 +143,7 @@ jobs:
             condition: '($SKIP_FORGE_PUBLISH != true)'
 
     - stage: 'validate tokens'
+      language: minimal
       name:  'validate CI GitHub OAuth token has sufficient scope to release'
       before_install: skip
       install: skip
