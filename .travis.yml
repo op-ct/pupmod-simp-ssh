@@ -145,8 +145,6 @@ jobs:
     - stage: 'validate tokens'
       language: minimal
       name:  'validate CI GitHub OAuth token has sufficient scope to release'
-      before_install: skip
-      install: skip
       script:
       - 'echo; echo "===== GITHUB_OAUTH_TOKEN validation (TRAVIS_SECURE_ENV_VARS=$TRAVIS_SECURE_ENV_VARS)"; echo'
       - 'OWNER="$(echo $TRAVIS_REPO_SLUG | cut -d/ -f1)"'
